@@ -7,6 +7,7 @@ import ErrorModel from "../UI/ErrorModel";
 const AddUser = (props) => {
     const[input,setInput]=useState('')
     const[age,setAge]=useState('')
+    const[college,setCollege]=useState('')
     const [error,setError]=useState();
 
     const inputHandler=(event)=>{
@@ -17,24 +18,28 @@ const AddUser = (props) => {
       setAge(event.target.value)
      // console.log(age)
     }
+    const collegeHandler=(event)=>{
+        setCollege(event.target.value)
+    }
     
     const addUserHandler = (event) => {
         event.preventDefault()
-        if(input.trim().length===0 || age.trim().length===0){
+        if(input.trim().length===0 || age.trim().length===0 || college.trim().length===0){
             setError({
                 title:'Invalid input',
-                message:'Please enter valid name and age (non empty value).'
+                message:'Please enter valid name, age and college (non empty value).'
             })
         }
-        if(+age <1){
+        if(age.trim().length <1){
             setError({
                 title:'Invalid age',
                 message:'Please enter valid age (must be greater than 0).'
             })
         }
-       props.onAddUser(input,age)
+       props.onAddUser(input,age,college)
         setInput('')
-        setAge('');
+        setAge('')
+        setCollege('')
     }
 
     const errorHandler=()=>{
@@ -51,6 +56,9 @@ const AddUser = (props) => {
 
                 <label htmlFor="age">Age( in Years)</label>
                 <input type="number" id="age" value={age} onChange={ageHandler}/>
+
+                <label htmlFor="college">College Name</label>
+                <input type="text" id='college' value={college} onChange={collegeHandler}/>
 
                 <Button type="submit">Add User</Button>
             </form>
